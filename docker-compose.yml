@@ -35,7 +35,7 @@ services:
     environment:
       - AHOY_URL=http://ahoy-dtu
       - INFLUX_URL=http://influxdb:8086
-      - INFLUX_TOKEN=pv-token
+      - INFLUX_TOKEN=pv_token
       - INFLUX_BUCKET=pv_bucket
-      - INFLUX_ORG=my-org
+      - INFLUX_ORG=pv-org
    
