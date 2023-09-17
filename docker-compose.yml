@@ -1,0 +1,41 @@
+version: "3"
+
+networks:
+  pvMon:
+
+services:
+  influxdb:
+    image: influxdb:latest
+    container_name: influx_db_pv
+    restart: always
+    networks:
+      - pvMon
+    volumes:
+      - ./influx_data:/var/lib/influxdb2
+    ports:
+      - 8086:8086
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana_pv
+    restart: always
+    networks:
+      - pvMon
+    volumes:
+      - ./grafana_data:/var/lib/grafana
+    ports:
+      - 3000:3000
+
+  ahoy2influx:
+    image: ahoy2influx:latest
+    container_name: ahoy2influx_pv
+    restart: always
+    networks:
+      - pvMon
+    environment:
+      - AHOY_URL=http://ahoy-dtu
+      - INFLUX_URL=http://influxdb:8086
+      - INFLUX_TOKEN=pv-token
+      - INFLUX_BUCKET=pv_bucket
+      - INFLUX_ORG=my-org
+   
