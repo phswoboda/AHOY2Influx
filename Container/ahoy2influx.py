@@ -80,7 +80,7 @@ if __name__ == "__main__":
     influxOrg = os.getenv("INFLUX_ORG", default="my-org");
     influxToken = os.getenv("INFLUX_TOKEN", default="pv-token");
     influxBucket = os.getenv("INFLUX_BUCKET", default="pv_bucket");
-
+    requestRate = os.getenv("REQUEST_RATE", default="120");
 
     ahoy2influx = AHOY2Influx(ahoyUrl, 
                               influxUrl,
@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     tl = Timeloop()
 
-    @tl.job(interval=timedelta(seconds=30))
+    @tl.job(interval=timedelta(seconds=requestRate))
     def influxDbUpdate_30s():
         print(ahoy2influx.update())
 
